@@ -1,69 +1,119 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Doctor Schedule</title>
-    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
-    <style>
-        body {
-            background-color: #4CAF50; /* Green background */
-            color: white;
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 20px;
-        }
-        .container {
-            max-width: 600px;
-            margin: auto;
-            border-radius: 8px;
-            padding: 20px;
-            background-color: #333;
-        }
-        h1 {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        .doctor {
-            border: 1px solid #fff;
-            border-radius: 5px;
-            padding: 15px;
-            margin-bottom: 10px;
-        }
-        .doctor h3 {
-            margin: 0;
-        }
-        .doctor p {
-            margin: 5px 0;
-        }
-    </style>
-</head>
-<body>
-
-<div id="app" class="container">
-    <h1>JADWAL DOKTER TERSEDIA</h1>
-    <div v-for="doctor in doctors" :key="doctor.name" class="doctor">
-        <h3>{{ doctor.name }}</h3>
-        <p><strong>{{ doctor.specialty }}</strong></p>
-        <p>{{ doctor.schedule }}</p>
+<template>
+  <div class="container">
+    <div class="header">
+      <h1>Jadwal Dokter Tersedia</h1>
     </div>
-</div>
+    <div class="content">
+      <div class="doctor-list">
+        <div class="doctor-card" v-for="doctor in doctors" :key="doctor.id">
+          <h3>{{ doctor.name }}</h3>
+          <p>{{ doctor.speciality }}</p>
+          <p>{{ doctor.schedule }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
 
 <script>
-new Vue({
-    el: '#app',
-    data: {
-        doctors: [
-            { name: 'dr. WIDIA RINA', specialty: 'DOKTER UMUM', schedule: 'Senin-Kamis, 08:00-12:00' },
-            { name: 'dr. ANGGA, Sp.PD', specialty: 'DOKTER SPESIALIS PENYAKIT DALAM', schedule: 'Rabu-Sabtu, 08:00-12:00' },
-            { name: 'dr. PURNAMA', specialty: 'DOKTER GIGI', schedule: 'Selasa-Rabu, 08:00-12:00' },
-            { name: 'dr. MAULANA, Sp.A', specialty: 'DOKTER SPESIALIS ANAK', schedule: 'Senin-Rabu, 08:00-12:00' },
-            { name: 'dr. ARDIS, Sp.OG', specialty: 'DOKTER SPESIALIS KANDUNGAN', schedule: 'Kamis-Sabtu, 08:00-12:00' },
-            { name: 'dr. SUMINAH, Sp.KK', specialty: 'DOKTER SPESIALIS KULIT KELAMIN', schedule: 'Kamis-Sabtu, 08:00-12:00' }
-        ]
+export default {
+  data() {
+    return {
+      doctors: [
+        {
+          id: 1,
+          name: 'dr. WIDIA RINA',
+          speciality: 'DOKTER UMUM',
+          schedule: 'Senin-Kamis, 08:00-12:00'
+        },
+        {
+          id: 2,
+          name: 'dr. ANGGA, Sp.PD',
+          speciality: 'DOKTER SPESIALIS PENYAKIT DALAM',
+          schedule: 'Rabu-Sabtu, 08:00-12:00'
+        },
+        {
+          id: 3,
+          name: 'drg. PURNAMA',
+          speciality: 'DOKTER GIGI',
+          schedule: 'Selasa-Kamis, 08:00-12:00'
+        },
+        {
+          id: 4,
+          name: 'dr. MAULANA, Sp.A',
+          speciality: 'DOKTER SPESIALIS ANAK',
+          schedule: 'Senin-Rabu, 08:00-12:00'
+        },
+        {
+          id: 5,
+          name: 'dr. ARDILES, Sp.OG',
+          speciality: 'DOKTER SPESIALIS KANDUNGAN',
+          schedule: 'Selasa-Sabtu, 08:00-12:00'
+        },
+        {
+          id: 6,
+          name: 'dr. SUMINAH, Sp.KK',
+          speciality: 'DOKTER SPESIALIS KULIT KELAMIN',
+          schedule: 'Kamis-Sabtu, 08:00-12:00'
+        }
+      ]
     }
-});
+  }
+}
 </script>
 
-</body>
-</html>
+<style scoped>
+.container {
+  background-color: #007B00;
+  color: white;
+  padding: 20px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.content {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.doctor-list {
+  background-color: #F2F2F2;
+  color: #333;
+  padding: 20px;
+  border-radius: 5px;
+  width: 100%;
+  max-width: 800px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-gap: 20px;
+}
+
+.doctor-card {
+  background-color: white;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 767px) {
+  .container {
+    padding: 10px;
+  }
+
+  .doctor-list {
+    padding: 10px;
+  }
+
+  .doctor-card {
+    padding: 10px;
+  }
+}
+</style>
