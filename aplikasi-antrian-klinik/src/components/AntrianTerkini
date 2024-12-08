@@ -1,61 +1,95 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Antrean</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #4CAF50;
-            color: white;
-            padding: 20px;
-            margin: 0;
-        }
-        .container {
-            max-width: 600px;
-            margin: auto;
-            padding: 20px;
-            background-color: #3E8E41;
-            border-radius: 10px;
-        }
-        .clinic {
-            background-color: #5CB85C;
-            margin: 10px 0;
-            padding: 15px;
-            border-radius: 5px;
-            text-align: center;
-        }
-        h1 {
-            text-align: center;
-        }
-    </style>
-</head>
-<body>
-    <div id="app">
-        <h1>CEK ANTRIAN SAAT INI</h1>
-        <div v-for="clinic in clinics" :key="clinic.name" class="clinic">
-            <h3>{{ clinic.name }}</h3>
-            <p>Nomor Antrean: {{ clinic.queueNumber }}</p>
-            <p>Perkiraan: {{ clinic.estimate }}</p>
-        </div>
+<template>
+  <div class="container">
+    <div class="header">
+      <h1>Antrian Saat ini</h1>
     </div>
+    <div class="content">
+      <div class="clinic-info">
+        <h2>CEK ANTRIAN SAAT INI</h2>
+        <div class="clinic" v-for="clinic in clinics" :key="clinic.id">
+          <h3>{{ clinic.name }}</h3>
+          <p>Nomor Antrian: {{ clinic.number }}</p>
+          <p>Perkiraan: {{ clinic.time }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
 
-    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
-    <script>
-        new Vue({
-            el: '#app',
-            data: {
-                clinics: [
-                    { name: 'POLIKLINIK UMUM', queueNumber: 'A - 10', estimate: 'Perkiraan: 10:30' },
-                    { name: 'POLIKLINIK PENYAKIT DALAM', queueNumber: 'B - 8', estimate: 'Perkiraan: 09:20' },
-                    { name: 'POLIKLINIK GIGI', queueNumber: 'D - 15', estimate: 'Perkiraan: 12:40' },
-                    { name: 'POLIKLINIK ANAK', queueNumber: 'F - 7', estimate: 'Perkiraan: 10:55' },
-                    { name: 'POLIKLINIK KEBIDANAN', queueNumber: 'E - 14', estimate: 'Perkiraan: 11:30' },
-                    { name: 'POLIKLINIK KULIT DAN KELAMIN', queueNumber: 'C - 3', estimate: 'Perkiraan: 10:05' },
-                ]
-            }
-        });
-    </script>
-</body>
-</html>
+<script>
+export default {
+  data() {
+    return {
+      clinics: [
+        {
+          id: 1,
+          name: 'POLIKLINIK UMUM',
+          number: 'A-10',
+          time: '10:30'
+        },
+        {
+          id: 2,
+          name: 'POLIKLINIK PENYAKIT DALAM',
+          number: 'B-8',
+          time: '09:20'
+        },
+        {
+          id: 3,
+          name: 'POLIKLINIK GIGI',
+          number: 'C-12',
+          time: '11:40'
+        },
+        {
+          id: 4,
+          name: 'POLIKLINIK ANAK',
+          number: 'D-15',
+          time: '12:40'
+        },
+        {
+          id: 5,
+          name: 'POLIKLINIK KEBIDANAN',
+          number: 'E-14',
+          time: '11:30'
+        },
+        {
+          id: 6,
+          name: 'POLIKLINIK KULIT DAN KELAMIN',
+          number: 'F-7',
+          time: '10:55'
+        }
+      ]
+    }
+  }
+}
+</script>
+
+<style scoped>
+.container {
+  background-color: #007B00;
+  color: white;
+  padding: 20px;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.clinic-info {
+  background-color: #F2F2F2;
+  color: #333;
+  padding: 20px;
+  border-radius: 5px;
+}
+
+.clinic {
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+}
+
+.clinic:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+}
+</style>
