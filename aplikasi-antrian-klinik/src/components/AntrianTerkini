@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Antrean</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #4CAF50;
+            color: white;
+            padding: 20px;
+            margin: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            background-color: #3E8E41;
+            border-radius: 10px;
+        }
+        .clinic {
+            background-color: #5CB85C;
+            margin: 10px 0;
+            padding: 15px;
+            border-radius: 5px;
+            text-align: center;
+        }
+        h1 {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <h1>CEK ANTRIAN SAAT INI</h1>
+        <div v-for="clinic in clinics" :key="clinic.name" class="clinic">
+            <h3>{{ clinic.name }}</h3>
+            <p>Nomor Antrean: {{ clinic.queueNumber }}</p>
+            <p>Perkiraan: {{ clinic.estimate }}</p>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                clinics: [
+                    { name: 'POLIKLINIK UMUM', queueNumber: 'A - 10', estimate: 'Perkiraan: 10:30' },
+                    { name: 'POLIKLINIK PENYAKIT DALAM', queueNumber: 'B - 8', estimate: 'Perkiraan: 09:20' },
+                    { name: 'POLIKLINIK GIGI', queueNumber: 'D - 15', estimate: 'Perkiraan: 12:40' },
+                    { name: 'POLIKLINIK ANAK', queueNumber: 'F - 7', estimate: 'Perkiraan: 10:55' },
+                    { name: 'POLIKLINIK KEBIDANAN', queueNumber: 'E - 14', estimate: 'Perkiraan: 11:30' },
+                    { name: 'POLIKLINIK KULIT DAN KELAMIN', queueNumber: 'C - 3', estimate: 'Perkiraan: 10:05' },
+                ]
+            }
+        });
+    </script>
+</body>
+</html>
