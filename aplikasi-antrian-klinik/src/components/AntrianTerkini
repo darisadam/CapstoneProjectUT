@@ -6,10 +6,12 @@
     <div class="content">
       <div class="clinic-info">
         <h2>CEK ANTRIAN SAAT INI</h2>
-        <div class="clinic" v-for="clinic in clinics" :key="clinic.id">
-          <h3>{{ clinic.name }}</h3>
-          <p>Nomor Antrian: {{ clinic.number }}</p>
-          <p>Perkiraan: {{ clinic.time }}</p>
+        <div class="clinic-list">
+          <div class="clinic" v-for="clinic in clinics" :key="clinic.id">
+            <h3>{{ clinic.name }}</h3>
+            <p>Nomor Antrian: {{ clinic.number }}</p>
+            <p>Perkiraan: {{ clinic.time }}</p>
+          </div>
         </div>
       </div>
     </div>
@@ -68,6 +70,9 @@ export default {
   background-color: #007B00;
   color: white;
   padding: 20px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 .header {
@@ -75,11 +80,26 @@ export default {
   margin-bottom: 20px;
 }
 
+.content {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .clinic-info {
   background-color: #F2F2F2;
   color: #333;
   padding: 20px;
   border-radius: 5px;
+  width: 100%;
+  max-width: 800px;
+}
+
+.clinic-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-gap: 20px;
 }
 
 .clinic {
@@ -91,5 +111,19 @@ export default {
 .clinic:last-child {
   border-bottom: none;
   margin-bottom: 0;
+}
+
+@media (max-width: 767px) {
+  .container {
+    padding: 10px;
+  }
+
+  .clinic-info {
+    padding: 10px;
+  }
+
+  .clinic-list {
+    grid-template-columns: 1fr;
+  }
 }
 </style>
