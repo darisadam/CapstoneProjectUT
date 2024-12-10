@@ -1,71 +1,88 @@
 <template>
-    <div class="medical-interface p-4 bg-green-700 min-h-screen">
-      <!-- Filter Section -->
-      <div class="grid grid-cols-2 gap-4 mb-6">
-        <!-- Clinic Dropdown -->
-        <select class="p-2 bg-gray-100 rounded" v-model="selectedClinic">
-          <option value="">POLIKLINIK</option>
+  <div class="medical-interface p-6 bg-blue-600 min-h-screen">
+    <!-- Top Right Navigation Button -->
+    <button
+      class="back-to-login"
+      @click="navigateToLogin"
+    >
+      Kembali ke Login Pasien
+    </button>
+
+    <!-- Filter Section -->
+    <div class="filter-section">
+      <div class="filter-bar">
+        <select
+          class="filter-dropdown"
+          v-model="selectedClinic"
+        >
+          <option value="">Pilih Poliklinik</option>
           <option v-for="clinic in clinics" :key="clinic" :value="clinic">
             {{ clinic }}
           </option>
         </select>
-  
-        <!-- Doctor Dropdown -->
-        <select class="p-2 bg-gray-100 rounded" v-model="selectedDoctor">
-          <option value="">DOKTER</option>
+
+        <select
+          class="filter-dropdown"
+          v-model="selectedDoctor"
+        >
+          <option value="">Pilih Dokter</option>
           <option v-for="doctor in doctors" :key="doctor" :value="doctor">
             {{ doctor }}
           </option>
         </select>
-  
-        <!-- Date Dropdown -->
-        <select class="p-2 bg-gray-100 rounded" v-model="selectedDate">
-          <option value="">SEMUA TANGGAL</option>
+
+        <select
+          class="filter-dropdown"
+          v-model="selectedDate"
+        >
+          <option value="">Pilih Tanggal</option>
           <option v-for="date in dates" :key="date" :value="date">
             {{ date }}
           </option>
         </select>
-  
-        <!-- Day Dropdown -->
-        <select class="p-2 bg-gray-100 rounded" v-model="selectedDay">
-          <option value="">SEMUA HARI</option>
+
+        <select
+          class="filter-dropdown"
+          v-model="selectedDay"
+        >
+          <option value="">Pilih Hari</option>
           <option v-for="day in days" :key="day" :value="day">
             {{ day }}
           </option>
         </select>
       </div>
-  
-      <!-- Appointment Table -->
-      <div class="bg-green-100 rounded-lg p-4">
-        <div class="grid grid-cols-6 gap-2 mb-4 font-bold header-row">
-          <div class="p-2">WAKTU KONSUL</div>
-          <div class="p-2">ANTRIAN (SLOT)</div>
-          <div class="p-2">PASIEN</div>
-          <div class="p-2">POLI</div>
-          <div class="p-2">DOKTER</div>
-          <div class="p-2">STATUS</div>
-        </div>
-  
-        <!-- Loop over filtered appointments -->
+    </div>
+
+    <!-- Appointments Section -->
+    <div class="appointment-section">
+      <div class="appointment-table-header">
+        <div>WAKTU KONSUL</div>
+        <div>ANTRIAN (SLOT)</div>
+        <div>PASIEN</div>
+        <div>POLI</div>
+        <div>DOKTER</div>
+        <div>STATUS</div>
+      </div>
+      <div class="appointment-table-content">
         <div
           v-for="appointment in filteredAppointments"
           :key="appointment.id"
-          class="grid grid-cols-6 gap-2 mb-2 appointment-row"
+          class="appointment-row"
         >
-          <div class="p-2">
+          <div>
             {{ appointment.day }}<br />
             {{ appointment.date }}<br />
             {{ appointment.time }}
           </div>
-          <div class="p-2">{{ appointment.queue }}</div>
-          <div class="p-2">
+          <div>{{ appointment.queue }}</div>
+          <div>
             {{ appointment.patientName }}<br />
             {{ appointment.patientId }}<br />
             {{ appointment.insuranceStatus }}
           </div>
-          <div class="p-2">{{ appointment.department }}</div>
-          <div class="p-2">{{ appointment.doctor }}</div>
-          <div class="p-2">
+          <div>{{ appointment.department }}</div>
+          <div>{{ appointment.doctor }}</div>
+          <div>
             {{ appointment.status }}<br />
             {{ appointment.registrationDate }}<br />
             {{ appointment.registrationTime }}
@@ -73,133 +90,151 @@
         </div>
       </div>
     </div>
-  </template>
-  
-  <script>
-  export default {
-    data() {
-      return {
-        selectedClinic: '',
-        selectedDoctor: '',
-        selectedDate: '',
-        selectedDay: '',
-        clinics: ['UMUM', 'GIGI', 'ANAK'],
-        doctors: ['dr. WIDIA RINA', 'drg. PURNAMA', 'dr. MAULANA, Sp.A'],
-        dates: [
-          '01 DESEMBER 2024',
-          '02 DESEMBER 2024',
-          '03 DESEMBER 2024',
-          '04 DESEMBER 2024',
-        ],
-        days: ['SENIN', 'SELASA', 'RABU', 'KAMIS', 'JUMAT'],
-        appointments: [
-          {
-            id: 1,
-            day: 'SENIN',
-            date: '02 DESEMBER 2024',
-            time: '08.00 - 12.00 WIB',
-            queue: 'A-10\nBELUM DIPANGGIL',
-            patientName: 'NURJANNAH',
-            patientId: '227103/03/1750033',
-            insuranceStatus: 'PRIBADI',
-            department: 'UMUM',
-            doctor: 'dr. WIDIA RINA',
-            status: 'REGISTRASI',
-            registrationDate: '02 DESEMBER 2024',
-            registrationTime: '09:12 WIB',
-          },
-          {
-            id: 2,
-            day: 'SELASA',
-            date: '03 DESEMBER 2024',
-            time: '08.00 - 12.00 WIB',
-            queue: 'A-21\nBELUM DIPANGGIL',
-            patientName: 'ADI',
-            patientId: '227104/03/1950003',
-            insuranceStatus: 'PRIBADI',
-            department: 'GIGI',
-            doctor: 'drg. PURNAMA',
-            status: 'REGISTRASI',
-            registrationDate: '03 DESEMBER 2024',
-            registrationTime: '10:23 WIB',
-          },
-          {
-            id: 3,
-            day: 'RABU',
-            date: '04 DESEMBER 2024',
-            time: '08.00 - 12.00 WIB',
-            queue: 'A-12\nBELUM DIPANGGIL',
-            patientName: 'DEAN',
-            patientId: '227103/03/456523',
-            insuranceStatus: 'PRIBADI',
-            department: 'ANAK',
-            doctor: 'dr. MAULANA, Sp.A',
-            status: 'REGISTRASI',
-            registrationDate: '04 DESEMBER 2024',
-            registrationTime: '08:15 WIB',
-          },
-        ],
-      };
+  </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      selectedClinic: '',
+      selectedDoctor: '',
+      selectedDate: '',
+      selectedDay: '',
+      clinics: ['UMUM', 'GIGI', 'ANAK'],
+      doctors: ['dr. WIDIA RINA', 'drg. PURNAMA', 'dr. MAULANA, Sp.A'],
+      dates: ['01 DESEMBER 2024', '02 DESEMBER 2024', '03 DESEMBER 2024'],
+      days: ['SENIN', 'SELASA', 'RABU', 'KAMIS', 'JUMAT'],
+      appointments: [
+        {
+          id: 1,
+          day: 'SENIN',
+          date: '02 DESEMBER 2024',
+          time: '08.00 - 12.00 WIB',
+          queue: 'A-10\nBELUM DIPANGGIL',
+          patientName: 'NURJANNAH',
+          patientId: '227103/03/1750033',
+          insuranceStatus: 'PRIBADI',
+          department: 'UMUM',
+          doctor: 'dr. WIDIA RINA',
+          status: 'REGISTRASI',
+          registrationDate: '02 DESEMBER 2024',
+          registrationTime: '09:12 WIB',
+        },
+        {
+          id: 2,
+          day: 'SELASA',
+          date: '03 DESEMBER 2024',
+          time: '08.00 - 12.00 WIB',
+          queue: 'A-21\nBELUM DIPANGGIL',
+          patientName: 'ADI',
+          patientId: '227104/03/1950003',
+          insuranceStatus: 'PRIBADI',
+          department: 'GIGI',
+          doctor: 'drg. PURNAMA',
+          status: 'REGISTRASI',
+          registrationDate: '03 DESEMBER 2024',
+          registrationTime: '10:23 WIB',
+        },
+      ],
+    };
+  },
+  computed: {
+    filteredAppointments() {
+      let filtered = [...this.appointments];
+      if (this.selectedClinic) {
+        filtered = filtered.filter(app => app.department === this.selectedClinic);
+      }
+      if (this.selectedDoctor) {
+        filtered = filtered.filter(app => app.doctor === this.selectedDoctor);
+      }
+      if (this.selectedDate) {
+        filtered = filtered.filter(app => app.date === this.selectedDate);
+      }
+      if (this.selectedDay) {
+        filtered = filtered.filter(app => app.day === this.selectedDay);
+      }
+      return filtered;
     },
-    computed: {
-      /**
-       * Dynamically filters appointments based on user selections.
-       */
-      filteredAppointments() {
-        let filtered = [...this.appointments];
-  
-        if (this.selectedClinic) {
-          filtered = filtered.filter(
-            (app) => app.department === this.selectedClinic
-          );
-        }
-        if (this.selectedDoctor) {
-          filtered = filtered.filter(
-            (app) => app.doctor === this.selectedDoctor
-          );
-        }
-        if (this.selectedDate) {
-          filtered = filtered.filter(
-            (app) => app.date === this.selectedDate
-          );
-        }
-        if (this.selectedDay) {
-          filtered = filtered.filter(
-            (app) => app.day === this.selectedDay
-          );
-        }
-  
-        return filtered;
-      },
+  },
+  methods: {
+    navigateToLogin() {
+      alert('Navigating to Login');
     },
-  };
-  </script>
-  
-  <style scoped>
-  /* General container setup */
-  .medical-interface {
-    font-family: Arial, sans-serif;
+  },
+};
+</script>
+
+<style scoped>
+/* General */
+.medical-interface {
+  font-family: Arial, sans-serif;
+  color: #fff;
+}
+
+/* Button */
+.back-to-login {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  padding: 8px 12px;
+  border-radius: 4px;
+  background-color: #f0f0f0;
+  border: none;
+  cursor: pointer;
+  color: #333;
+}
+
+/* Filter UI */
+.filter-section {
+  margin-bottom: 20px;
+}
+
+.filter-bar {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.filter-dropdown {
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  min-width: 120px;
+}
+
+/* Appointment Section */
+.appointment-section {
+  background: #ffffff;
+  color: #333;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.appointment-table-header,
+.appointment-row {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  padding: 8px;
+  border-bottom: 1px solid #ddd;
+  text-align: center;
+}
+
+.appointment-table-header {
+  font-weight: bold;
+}
+
+.appointment-row {
+  padding: 10px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+}
+
+/* Responsiveness */
+@media (max-width: 768px) {
+  .filter-dropdown {
+    min-width: 100%;
   }
-  
-  /* Table Header Row */
-  .header-row {
-    background-color: #d3d3d3;
-    text-align: center;
-  }
-  
-  /* Table Appointment Row */
-  .appointment-row {
-    border: 1px solid #c0c0c0;
-    background-color: white;
-    padding: 10px;
-    border-radius: 5px;
-  }
-  
-  /* Adjust UI responsiveness */
-  @media (max-width: 768px) {
-    .grid {
-      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-    }
-  }
-  </style>
-  
+}
+</style>

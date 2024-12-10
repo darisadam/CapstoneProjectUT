@@ -13,6 +13,12 @@
               <p><strong>Perkiraan:</strong> {{ clinic.time }}</p>
             </div>
           </div>
+          
+          <!-- Buttons for navigation -->
+          <div class="button-container">
+            <button @click="navigateToJadwalDokter" class="nav-button">Jadwal Dokter</button>
+            <button @click="navigateToDaftarBerobat" class="nav-button">Daftar Berobat Pasien</button>
+          </div>
         </section>
       </main>
     </div>
@@ -33,10 +39,24 @@
         ],
       };
     },
+    methods: {
+      navigateToJadwalDokter() {
+        this.$router.push({ name: "JadwalDokter" });
+      },
+      navigateToDaftarBerobat() {
+        this.$router.push({ name: "DaftarBerobatPasien" });
+      },
+    },
   };
   </script>
   
   <style scoped>
+  /* General Reset */
+  * {
+    box-sizing: border-box;
+  }
+  
+  /* Main Container */
   .container {
     background-color: #007b00;
     color: white;
@@ -46,25 +66,28 @@
     flex-direction: column;
   }
   
+  /* Header */
   .header {
     text-align: center;
     margin-bottom: 20px;
   }
   
+  /* Content Section */
   .content {
     flex-grow: 1;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
   }
   
+  /* Clinic Info Section */
   .clinic-info {
     background-color: #f2f2f2;
     color: #333;
     padding: 20px;
     border-radius: 8px;
     width: 100%;
-    max-width: 800px;
+    max-width: 900px;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   }
   
@@ -74,10 +97,12 @@
     color: #007b00;
   }
   
+  /* Clinics Grid */
   .clinic-list {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 20px;
+    gap: 15px;
+    margin-bottom: 20px;
   }
   
   .clinic {
@@ -89,32 +114,49 @@
   }
   
   .clinic:hover {
-    transform: translateY(-5px);
-    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    transform: translateY(-3px);
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
   }
   
   .clinic h3 {
     margin-bottom: 10px;
-    font-size: 1.2rem;
+    font-size: 1rem;
     color: #007b00;
   }
   
-  .clinic p {
-    margin: 5px 0;
-    font-size: 0.9rem;
+  /* Buttons Section */
+  .button-container {
+    display: flex;
+    justify-content: space-around;
+    gap: 15px;
+    margin-top: 10px;
   }
   
-  @media (max-width: 767px) {
-    .container {
-      padding: 10px;
-    }
+  .nav-button {
+    background-color: #007b00;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
   
-    .clinic-info {
-      padding: 15px;
-    }
+  .nav-button:hover {
+    background-color: #005800;
+  }
   
+  /* Responsive Design */
+  @media (max-width: 768px) {
     .clinic-list {
       grid-template-columns: 1fr;
+    }
+  
+    .button-container {
+      flex-direction: column;
+      gap: 10px;
+      align-items: center;
     }
   }
   </style>

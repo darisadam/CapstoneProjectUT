@@ -1,5 +1,8 @@
 <template>
     <div class="login-container">
+      <!-- Back to Login Pasien Button placed at the top right corner of the screen -->
+      <button @click="navigateToLoginPasien" class="back-button">Kembali ke Login Pasien</button>
+  
       <div class="login-wrapper">
         <!-- Title -->
         <h1 class="login-title">Login</h1>
@@ -11,18 +14,7 @@
             <input
               v-model="formData.username"
               type="text"
-              placeholder="Nama Pengguna"
-              class="form-input"
-              required
-            />
-          </div>
-  
-          <!-- Email Field -->
-          <div class="form-group">
-            <input
-              v-model="formData.email"
-              type="email"
-              placeholder="Email"
+              placeholder="Username"
               class="form-input"
               required
             />
@@ -41,9 +33,7 @@
   
           <!-- Submit Button -->
           <div class="form-action">
-            <button type="submit" class="form-button">
-              Login
-            </button>
+            <button type="submit" class="form-button">Login</button>
           </div>
         </form>
       </div>
@@ -51,36 +41,49 @@
   </template>
   
   <script>
-  import { ref } from 'vue';
+  import { ref } from "vue";
+  import { useRouter } from "vue-router";
   
   export default {
-    name: 'LoginKlinik',
+    name: "LoginKlinik",
     setup() {
+      const router = useRouter();
       const formData = ref({
         username: '',
-        email: '',
         password: '',
       });
   
       const handleSubmit = () => {
-        if (!formData.value.username || !formData.value.email || !formData.value.password) {
-          alert('Harap isi semua bidang!');
-          return;
+        if (formData.value.username && formData.value.password) {
+          console.log("Navigating to AntrianPoliklinik.vue");
+          router.push({ name: 'AntrianPoliklinik' });
+        } else {
+          alert("Harap isi semua bidang!");
         }
-        console.log('Form submitted:', formData.value);
-        // Add your login logic here
+      };
+  
+      const navigateToLoginPasien = () => {
+        router.push({ name: 'LoginPasien' });
       };
   
       return {
         formData,
         handleSubmit,
+        navigateToLoginPasien,
       };
     },
   };
   </script>
   
   <style scoped>
-  /* Container Styles */
+  /* General Reset */
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  /* Login Container */
   .login-container {
     background-color: #166534; /* Dark Green */
     min-height: 100vh;
@@ -88,9 +91,29 @@
     align-items: center;
     justify-content: center;
     padding: 20px;
+    position: relative; /* To position the top-right button */
   }
   
-  /* Wrapper Styles */
+  /* Back to Login Pasien Button */
+  .back-button {
+    position: absolute; /* Fixed position */
+    top: 15px;
+    right: 15px;
+    background-color: #f3f3f3;
+    color: #1a1a1a;
+    padding: 8px 12px;
+    font-size: 14px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  
+  .back-button:hover {
+    background-color: #e2e2e2;
+  }
+  
+  /* Login Wrapper */
   .login-wrapper {
     background-color: #bbf7d0; /* Light Green */
     padding: 40px;
@@ -100,7 +123,7 @@
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   }
   
-  /* Title Styles */
+  /* Title */
   .login-title {
     color: #1a1a1a;
     font-size: 28px;
@@ -109,7 +132,7 @@
     margin-bottom: 20px;
   }
   
-  /* Form Styles */
+  /* Form */
   .form-container {
     display: flex;
     flex-direction: column;
@@ -127,27 +150,21 @@
     border-radius: 6px;
     background-color: #f3f3f3;
     font-size: 16px;
-    transition: box-shadow 0.2s;
   }
   
   .form-input:focus {
     outline: none;
-    box-shadow: 0 0 0 3px rgba(72, 187, 120, 0.5); /* Focus ring */
+    box-shadow: 0 0 0 3px rgba(72, 187, 120, 0.5);
   }
   
-  .form-input::placeholder {
-    color: #666;
-    font-size: 14px;
-  }
-  
-  /* Button Styles */
+  /* Submit Button */
   .form-action {
     display: flex;
     justify-content: center;
   }
   
   .form-button {
-    background-color: #f3f3f3; /* Light Gray */
+    background-color: #f3f3f3;
     color: #1a1a1a;
     padding: 12px 20px;
     font-size: 16px;
@@ -155,16 +172,28 @@
     border: none;
     border-radius: 6px;
     cursor: pointer;
-    transition: background-color 0.2s, transform 0.2s;
+    transition: background-color 0.2s ease, transform 0.2s ease;
   }
   
   .form-button:hover {
-    background-color: #e2e2e2; /* Slightly darker gray */
+    background-color: #e2e2e2;
     transform: translateY(-2px);
   }
   
-  .form-button:active {
-    transform: translateY(0);
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .login-wrapper {
+      padding: 30px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .login-wrapper {
+      padding: 20px;
+    }
+    .login-title {
+      font-size: 24px;
+    }
   }
   </style>
   
