@@ -1,18 +1,15 @@
 <template>
   <div id="app">
-    <InformasiAntrian />
+    <router-view v-slot="{ Component }">
+      <component :is="Component" />
+    </router-view>
   </div>
 </template>
 
 <script>
-import InformasiAntrian from './components/InformasiAntrian.vue';
-
 export default {
   name: 'App',
-  components: {
-    InformasiAntrian
-  }
-}
+};
 </script>
 
 <style>
